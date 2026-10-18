@@ -98,6 +98,16 @@ internal static unsafe class BufferHelper
         }
     }
 
+    /// <summary>
+    /// Copy unpremultiplied plane to the destination BGRA buffer.
+    /// </summary>
+    /// <param name="source">The pointer of the decoder plane buffer.</param>
+    /// <param name="sourceStride">Pixel stride under the buffer.</param>
+    /// <param name="width">The width of the plane.</param>
+    /// <param name="height">The height of the plane.</param>
+    /// <param name="hasAlpha">Whether the plane has alpha channel.</param>
+    /// <param name="isPremultiplied">Whether the plane must be premultiplied while copying to <paramref name="destination"/> buffer.</param>
+    /// <param name="destination">The destination BGRA buffer.</param>
     public static unsafe void CopyPlaneToFrame4(byte*      source,
                                                 int        sourceStride,
                                                 int        width,
