@@ -79,9 +79,7 @@ internal static unsafe class WebpBackend
             ReadOnlySpan<byte> chunkType = data.Slice(chunkOffset, 4);
             if (chunkType.SequenceEqual("ANMF"u8))
             {
-                uint frameDuration = ReadAnimationFrameDuration(data,
-                                                                chunkOffset,
-                                                                chunkLength);
+                uint frameDuration = ReadAnimationFrameDuration(data, chunkOffset, chunkLength);
                 totalAnimationDuration += frameDuration;
                 ValidateAnimationDuration(totalAnimationDuration);
             }
@@ -102,8 +100,7 @@ internal static unsafe class WebpBackend
         }
 
         chunkOffset = checked((int)offset);
-        chunkLength = BinaryPrimitives.ReadUInt32LittleEndian(
-            data.Slice(chunkOffset + 4, 4));
+        chunkLength = BinaryPrimitives.ReadUInt32LittleEndian(data.Slice(chunkOffset + 4, 4));
 
         long dataEnd = checked(offset + 8 + chunkLength);
         nextOffset   = checked(dataEnd + (chunkLength & 1));

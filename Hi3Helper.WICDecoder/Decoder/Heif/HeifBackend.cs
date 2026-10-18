@@ -156,7 +156,7 @@ internal static unsafe partial class HeifBackend
         try
         {
             bool isPremultiplied = HeifInterop.heif_image_is_premultiplied_alpha(image) != 0;
-            CopyPlaneToFrame(plane, stride, width, height, hasAlpha, isPremultiplied, frame.PixelSpan);
+            BufferHelper.CopyPlaneToFrame4(plane, stride, width, height, hasAlpha, isPremultiplied, frame.PixelSpan);
             return frame;
         }
         catch
@@ -199,60 +199,6 @@ internal static unsafe partial class HeifBackend
                               startTicks,
                               durationTicks,
                               timescale);
-    }
-
-    private static void CopyPlaneToFrame(byte*      source,
-                                         int        sourceStride,
-                                         int        width,
-                                         int        height,
-                                         bool       hasAlpha,
-                                         bool       isPremultiplied,
-                                         Span<byte> destination)
-    {
-        for (int y = 0; y < height; y++)
-        {
-            byte* sourceRow = source + (long)y * sourceStride;
-            Span<byte> destinationRow = destination.Slice(y * width * 4, width * 4);
-
-            CopyPixelRow(sourceRow,
-                         destinationRow,
-                         width,
-                         hasAlpha,
-                         isPremultiplied);
-        }
-    }
-
-    private static void CopyPixelRow(byte*      source,
-                                     Span<byte> destination,
-                                     int        width,
-                                     bool       hasAlpha,
-                                     bool       isPremultiplied)
-    {
-        for (int x = 0; x < width; x++)
-        {
-            int  sourceOffset = x * 4;
-            byte alpha        = hasAlpha ? source[sourceOffset + 3] : byte.MaxValue;
-
-            destination[sourceOffset]     = GetStraightChannel(source[sourceOffset + 2], alpha, isPremultiplied);
-            destination[sourceOffset + 1] = GetStraightChannel(source[sourceOffset + 1], alpha, isPremultiplied);
-            destination[sourceOffset + 2] = GetStraightChannel(source[sourceOffset], alpha, isPremultiplied);
-            destination[sourceOffset + 3] = alpha;
-        }
-    }
-
-    private static byte GetStraightChannel(byte value, byte alpha, bool isPremultiplied)
-    {
-        if (!isPremultiplied)
-        {
-            return value;
-        }
-
-        if (alpha == 0)
-        {
-            return 0;
-        }
-
-        return (byte)Math.Min(255, (value * 255 + alpha / 2) / alpha);
     }
 
     internal static uint Milliseconds(ulong ticks, uint timescale)

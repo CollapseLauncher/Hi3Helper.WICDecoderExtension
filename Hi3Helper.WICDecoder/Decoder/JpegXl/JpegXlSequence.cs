@@ -113,7 +113,7 @@ internal sealed class JpegXlSequence : IDisposable
             throw new COMException("libjxl completed a frame without providing pixels.", HResultConst.BadImage);
         }
 
-        ConvertRgbaToBgra(_currentFrame.PixelSpan);
+        BufferHelper.ReverseXxxa(_currentFrame.PixelSpan);
 
         _frames.Add(_currentFrame);
         _startTicks = checked(_startTicks + _currentFrame.DurationTicks);
@@ -212,13 +212,5 @@ internal sealed class JpegXlSequence : IDisposable
     {
         ulong milliseconds = checked(ticks * 1000) / timescale;
         return checked((uint)milliseconds);
-    }
-
-    private static void ConvertRgbaToBgra(Span<byte> pixels)
-    {
-        for (int offset = 0; offset < pixels.Length; offset += 4)
-        {
-            (pixels[offset], pixels[offset + 2]) = (pixels[offset + 2], pixels[offset]);
-        }
     }
 }
