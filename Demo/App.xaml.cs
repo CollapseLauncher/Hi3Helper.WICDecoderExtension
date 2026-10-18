@@ -32,7 +32,7 @@ public partial class App
         CodecRegistration.RegisterOrGetCustomCodecs(DecoderDescriptor.Avif,   out _, out _);
         CodecRegistration.RegisterOrGetCustomCodecs(DecoderDescriptor.Heif,   out _, out _);
         CodecRegistration.RegisterOrGetCustomCodecs(DecoderDescriptor.Webp,   out _, out _);
-        // CodecRegistration.RegisterOrGetCustomCodecs(DecoderDescriptor.JpegXl, out _, out _);
+        CodecRegistration.RegisterOrGetCustomCodecs(DecoderDescriptor.JpegXl, out _, out _);
 
         _window = new MainWindow();
         _window.Activate();
