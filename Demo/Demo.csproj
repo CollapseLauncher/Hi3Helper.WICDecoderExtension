@@ -30,7 +30,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Hi3Helper.WICDecoder\Hi3Helper.WICDecoder.csproj" />
+    <ProjectReference Include="..\src\Hi3Helper.WICDecoder.csproj" />
     <ProjectReference Include="..\Utility\Utility.csproj" />
   </ItemGroup>
 

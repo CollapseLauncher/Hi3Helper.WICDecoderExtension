@@ -1,0 +1,15 @@
+<Solution>
+  <Project Path="../src/Hi3Helper.WICDecoder.csproj">
+    <Platform Project="x64" />
+  </Project>
+  <Project Path="../Hi3Helper.Win32/Hi3Helper.Win32.csproj">
+    <Platform Project="x64" />
+  </Project>
+  <Project Path="../Hi3Helper.Win32/WinRT/Hi3Helper.Win32.WinRT.csproj">
+    <Platform Project="x64" />
+  </Project>
+  <Project Path="../Utility/Utility.csproj">
+    <Platform Project="x64" />
+  </Project>
+  <Project Path="Demo.csproj" />
+</Solution>
