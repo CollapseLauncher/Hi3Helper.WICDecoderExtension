@@ -51,7 +51,6 @@ internal sealed unsafe partial class ImageFrame : IWICBitmapFrameDecode, IDispos
 
     internal Span<byte> PixelSpan         => new(_buffer, checked((int)_bufferLength));
     internal nint       PixelBuffer       => (nint)_buffer;
-    internal nuint      PixelBufferLength => _bufferLength;
 
     public void Dispose()
     {
